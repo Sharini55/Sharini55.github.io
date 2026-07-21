@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sharini Kandregula</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:      #fffaf0;
-      --ink:     #0d3471;
-      --border:  rgba(13, 52, 113, 0.18);
+      --bg:     #fffaf0;
+      --ink:    #0d3471;
+      --border: rgba(13, 52, 113, 0.18);
     }
 
     html { scroll-behavior: smooth; }
@@ -89,11 +93,6 @@
       max-width: 680px;
       text-align: left;
     }
-    <head>
-  <meta charset="UTF-8">
-  <title>Sharini Kandregula</title>
-  <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
-</head>
 
     /* ── SECTION HEADINGS ── */
     .section-title {
@@ -142,13 +141,6 @@
       display: block;
     }
 
-    .card-img-placeholder {
-      width: 100%;
-      height: 100%;
-      min-height: 220px;
-      background: rgba(13, 52, 113, 0.04);
-    }
-
     .card-body {
       padding: 36px 40px;
       display: flex;
@@ -156,6 +148,11 @@
       gap: 14px;
       flex: 1;
       justify-content: center;
+    }
+
+    /* Layout override for cards without images */
+    .project-card.no-img-card .card-body {
+      width: 100%;
     }
 
     .card-title {
@@ -314,11 +311,8 @@
       </div>
     </a>
 
-    <!-- Other Projects -->
-    <a href="other-projects.html" class="project-card">
-      <div class="card-img-wrap">
-        <div class="card-img-placeholder"></div>
-      </div>
+    <!-- Other Projects (Full Width layout without image gap) -->
+    <a href="other-projects.html" class="project-card no-img-card">
       <div class="card-body">
         <div class="card-title">Other Projects</div>
         <p class="card-desc">
