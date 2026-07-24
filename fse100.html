@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSE 100 AR/VR Educational Platform — Case Study | Sharini Kandregula</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #fffaf0;
+      --ink:    #0d3471;
+      --border: rgba(13, 52, 113, 0.18);
+      --red:    #c0392b;
+      --green:  #2e7d32;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 250, 240, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nav-links a {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.18s;
+    }
+
+    .nav-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── LAYOUT ── */
+    .page-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 60px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 28px;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--bg); }
+
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    /* ── SECTIONS ── */
+    .section-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .section-body p { margin-bottom: 16px; max-width: 760px; }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stack-tag {
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+
+    /* ── FEATURES ── */
+    .feature-block {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .feature-block:last-child { border-bottom: 1px solid var(--border); }
+
+    .feature-title {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .prd-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .prd-link:hover { opacity: 0.7; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: rgba(13, 52, 113, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0 28px;
+      font-size: 0.95rem;
+    }
+
+    /* ── TABLES ── */
+    .metric-block { margin-bottom: 36px; }
+
+    .metric-label {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 700;
+      opacity: 0.7;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .status-pass { background: var(--green); }
+    .status-fail { background: var(--red); }
+
+    .metric-note {
+      font-size: 0.92rem;
+      opacity: 0.8;
+      margin-top: 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-name { font-size: 0.95rem; opacity: 0.6; }
+
+    .footer-links { display: flex; gap: 32px; }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .footer-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; flex-wrap: wrap; }
+      .page-section { padding: 60px 20px; }
+      #hero { padding-top: 120px; }
+      footer { flex-direction: column; padding: 28px 20px; align-items: flex-start; }
+      table { font-size: 0.82rem; }
+      th, td { padding: 8px 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" class="page-section">
+  <h1 class="hero-title">FSE 100 AR/VR Educational Platform</h1>
+  <div class="btn-row">
+    <a href="#" class="btn">View Transition Doc</a>
+    <a href="#" class="btn btn-primary">See Prototype Demo</a>
+  </div>
+</section>
+
+<!-- ── PROBLEM STATEMENT ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Problem Statement</h2>
+  <p>Following a corporate donation of 30+ Meta Quest VR headsets by Honeywell to ASU's Fulton Schools of Engineering (FSE), the initial scope tasked our team with building an isolated 2-to-3-day VR curriculum module specifically for freshmen in the introductory <em>FSE 100</em> course[cite: 2].</p>
+  <p>However, early stakeholder discovery with university faculty revealed a fundamental flaw in the initial requirement: locking immersive technology strictly into a single freshmen course created massive operational constraints, high scheduling friction, and a single point of failure. Without a scalable model, the donated hardware risked becoming obsolete after a single semester.</p>
+</section>
+
+<!-- ── TARGET USERS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Target Users</h2>
+  <p><strong>Undergraduate Engineering Students</strong> requiring hands-on, spatial understanding of complex engineering concepts (such as robotics debugging, circuit visualization, and spatial mechanics)[cite: 2].</p>
+  <p><strong>Course Instructors & TAs</strong> who need a modular, low-friction tool that integrates smoothly into existing curricula without requiring complex software setups or rigid, multi-hour scheduling slots[cite: 2, 3].</p>
+</section>
+
+<!-- ── STRATEGIC PIVOT & SOLUTION ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Strategic Pivot & Platform Solution</h2>
+  <p>Instead of building a hyper-specific, one-off VR lesson plan, our team executed a strategic product pivot[cite: 2]. We redefined the product vision from a rigid single-course module to an <strong>extensible, multi-course academic platform framework</strong>[cite: 2].</p>
+  <p><strong>The core value delivery:</strong> We designed modular, high-yield activity blocks (e.g., an interactive EV3 Lego Robot Maze Runner for logic debugging)[cite: 2] paired with lightweight WebXR/Three.js web previews and Unity concept builds[cite: 2, 3]. To ensure long-term sustainability, we delivered a comprehensive transition design document that acts as an operational roadmap for future engineering development cohorts to scale the ecosystem[cite: 2].</p>
+</section>
+
+<!-- ── TECHNICAL ARCHITECTURE & STACK ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Technical & PM Toolkit</h2>
+  <p>The project combined rapid prototyping technologies with structured product discovery and decision matrices to evaluate implementation trade-offs across hardware, engine overhead, and user friction[cite: 2].</p>
+  <div class="stack-tags">
+    <span class="stack-tag">Meta Quest VR</span>
+    <span class="stack-tag">Unity 3D</span>
+    <span class="stack-tag">Three.js</span>
+    <span class="stack-tag">Vercel Deployment</span>
+    <span class="stack-tag">Qualitative User Research</span>
+    <span class="stack-tag">Competitive Benchmarking</span>
+    <span class="stack-tag">Weighted Decision Matrix</span>
+    <span class="stack-tag">Cross-Functional Leadership</span>
+  </div>
+</section>
+
+<!-- ── USER RESEARCH ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">User Research & Discovery</h2>
+  <p>We conducted quantitative discovery surveys and qualitative interviews ($N=10$) with active engineering undergraduates to evaluate emerging technology literacy and surface friction points with existing campus VR installations (such as ASU Dreamscape)[cite: 2, 3].</p>
+
+  <div class="callout">
+    <strong>Key Finding:</strong> 70% of surveyed students had completed a Dreamscape VR session, but sentiment was strongly split[cite: 2]. Students cited motion sickness, hardware glitches, and forced, rigid narrative storylines as major turn-offs[cite: 2]. They explicitly demanded high-interactivity, practical hands-on debugging over passive story-driven experiences[cite: 2].
+  </div>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>User Sentiment & Familiarity Overview</strong></div>
+    <table>
+      <thead>
+        <tr><th>Dimension</th><th>Survey Finding</th><th>Product Implication</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tech Familiarity</strong></td>
+          <td>3.1 – 3.4 / 5 average exposure[cite: 2]</td>
+          <td>Students acquire knowledge via YouTube/media; onboarding must be intuitive with zero learning curve[cite: 2].</td>
+        </tr>
+        <tr>
+          <td><strong>Dreamscape Frustration</strong></td>
+          <td>High narrative friction[cite: 2]</td>
+          <td>Strip away long non-skippable cutscenes; focus purely on active, task-based engineering challenges[cite: 2].</td>
+        </tr>
+        <tr>
+          <td><strong>Hardware Pain Points</strong></td>
+          <td>Motion sickness & headaches[cite: 2]</td>
+          <td>Limit continuous VR exposure time to short, 10–15 minute focused task sprints[cite: 2].</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── COMPETITIVE ANALYSIS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Competitive Benchmarking</h2>
+  <p>To position our solution effectively, we benchmarked 6 alternative platforms across cost, implementation ease, student engagement, and learning curves[cite: 2, 3].</p>
+
+  <div class="metric-block">
+    <table>
+      <thead>
+        <tr><th>Solution</th><th>Cost</th><th>Implementation</th><th>Engagement</th><th>Primary Pitfall Identified</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dreamscape Labs</strong></td>
+          <td>Free / $100+[cite: 2]</td>
+          <td>Difficult[cite: 2, 3]</td>
+          <td>Mixed[cite: 2, 3]</td>
+          <td>Rigid plot; disconnected from core CS/Engineering concepts[cite: 2, 3].</td>
+        </tr>
+        <tr>
+          <td><strong>Online Courseware</strong></td>
+          <td>Low – Mod[cite: 2, 3]</td>
+          <td>Easy[cite: 2, 3]</td>
+          <td>Low[cite: 2, 3]</td>
+          <td>Lacks true 3D spatial immersion and interactive practice[cite: 3].</td>
+        </tr>
+        <tr>
+          <td><strong>Meta App Store</strong></td>
+          <td>Low – Mod[cite: 2, 3]</td>
+          <td>Easy[cite: 2, 3]</td>
+          <td>Varies[cite: 2, 3]</td>
+          <td>High distraction potential; hard for TAs to enforce learning outcomes[cite: 2].</td>
+        </tr>
+        <tr style="background: rgba(13, 52, 113, 0.05); font-weight: bold;">
+          <td><strong>Proposed Framework</strong></td>
+          <td><strong>Free (Donated)</strong>[cite: 2, 3]</td>
+          <td><strong>Modular</strong>[cite: 2, 3]</td>
+          <td><strong>High</strong>[cite: 2, 3]</td>
+          <td>Tailored directly to hands-on engineering debugging[cite: 2].</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── KEY PM FEATURES & DELIVERABLES ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Product Deliverables</h2>
+
+  <div class="feature-block">
+    <div class="feature-title">1 — Scalable Transition Design Document</div>
+    <p>Authored a comprehensive operational and technical design doc outlining user personas, technical dependencies, hardware management guidelines, and roadmap expansion plans to seamlessly hand off development to future engineering cohorts[cite: 2].</p>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">2 — Weighted Decision Matrix for Product Direction</div>
+    <p>Evaluated 6 distinct concept directions (Dreamscape builds, custom modules, tech lectures, interview prep, activity-based tools) using a weighted matrix prioritized on <strong>Student Engagement (50%)</strong> and <strong>Implementation Feasibility (20%)</strong>[cite: 2].</p>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">3 — Interactive Web & VR Prototypes</div>
+    <p>Spearheaded early concept validation by deploying a Three.js WebXR concept on Vercel and a Unity-based EV3 Lego Robot Maze Runner simulation to gather real-time feedback from course professors[cite: 2, 3].</p>
+  </div>
+</section>
+
+<!-- ── LEARNINGS & IMPACT ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">What I Learned and APM Takeaways</h2>
+  <p><strong>1. Pivot early based on real constraints:</strong> The biggest risk in emerging tech projects is building a polished solution for the wrong scope. By challenging the initial "single course" requirement through user discovery, we saved months of engineering overhead and built a framework that scales across the university[cite: 2].</p>
+  <p><strong>2. Engagement is killed by unnecessary friction:</strong> VR is intrinsically immersive, but poor user experience (forced narratives, hardware fatigue) rapidly degrades value. High-yield, short-burst interactive tasks perform significantly better in academic settings[cite: 2].</p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-name">Sharini Kandregula · skandre4@asu.edu</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Sharini55" target="_blank">GitHub</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>
