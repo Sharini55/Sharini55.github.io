@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Study Buddy — Case Study | Sharini Kandregula</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #fffaf0;
+      --ink:    #0d3471;
+      --border: rgba(13, 52, 113, 0.18);
+      --red:    #c0392b;
+      --green:  #2e7d32;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 250, 240, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nav-links a {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.18s;
+    }
+
+    .nav-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── LAYOUT ── */
+    .page-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 60px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 28px;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--bg); }
+
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    /* ── SECTIONS ── */
+    .section-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .section-body p { margin-bottom: 16px; max-width: 760px; }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stack-tag {
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+
+    /* ── FEATURES ── */
+    .feature-block {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .feature-block:last-child { border-bottom: 1px solid var(--border); }
+
+    .feature-title {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+
+    .prd-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .prd-link:hover { opacity: 0.7; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: rgba(13, 52, 113, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0 28px;
+      font-size: 0.95rem;
+    }
+
+    /* ── METRIC TABLES ── */
+    .metric-block { margin-bottom: 36px; }
+
+    .metric-label {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 700;
+      opacity: 0.7;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .status-pass { background: var(--green); }
+    .status-fail { background: var(--red); }
+
+    .metric-note {
+      font-size: 0.92rem;
+      opacity: 0.8;
+      margin-top: 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-name { font-size: 0.95rem; opacity: 0.6; }
+
+    .footer-links { display: flex; gap: 32px; }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .footer-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; flex-wrap: wrap; }
+      .page-section { padding: 60px 20px; }
+      #hero { padding-top: 120px; }
+      footer { flex-direction: column; padding: 28px 20px; align-items: flex-start; }
+      table { font-size: 0.82rem; }
+      th, td { padding: 8px 6px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" class="page-section">
+  <h1 class="hero-title">AI Study Buddy</h1>
+  <div class="btn-row">
+    <a href="https://github.com/Sharini55/AI-study-buddy" target="_blank" class="btn">See code</a>
+    <a href="https://aistudybuddy-beayhugda7b2ghad.eastus-01.azurewebsites.net/" target="_blank" class="btn btn-primary">See it live</a>
+  </div>
+</section>
+
+<!-- ── PROBLEM STATEMENT ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Problem Statement</h2>
+  <p>STEM students are constantly overwhelmed by scattered, high-volume course materials — dozens of lecture slides, textbook PDFs, and unstructured notes, with limited time before exams. The core challenge isn't organizing this material; it's prioritizing and mastering the information quickly.</p>
+  <p>Students lack a direct, fast path from raw course files to high-yield exam preparation. Without a structured way to extract key concepts, self-assess, and identify knowledge gaps, students spend precious study hours passively skimming slides rather than actively practicing.</p>
+</section>
+
+<!-- ── TARGET USERS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Target Users</h2>
+  <p><strong>STEM university students</strong> preparing for midterms and finals who need to turn dense lecture decks and PDFs into actionable, high-yield study resources.</p>
+  <p>Students who don't have hours to manually write practice questions or outline topics, and need targeted practice on what will actually be tested.</p>
+</section>
+
+<!-- ── SOLUTION ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Solution</h2>
+  <p>AI Study Buddy is a web-based study workspace where students upload raw course material, index it once, and generate AI-powered study guides and adaptive quizzes on demand. The workspace model means uploaded material persists across sessions, so students don't have to re-upload every time. Multiple workspaces support multiple subjects simultaneously.</p>
+  <p><strong>The core loop:</strong> Upload material → Index → Generate study guide → Take quiz → Review weak areas → Generate targeted remediation guide or quiz → Retake.</p>
+</section>
+
+<!-- ── TECHNICAL ARCHITECTURE ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Technical Architecture</h2>
+  <p>AI Study Buddy is built with Python and Streamlit and deployed on Azure App Service, using a PostgreSQL database on Azure. Source files are parsed, chunked using LangChain, converted to vector embeddings, and stored for semantic retrieval.</p>
+  <p>Study guide generation uses a Skeleton-of-Thought parallel processing framework — instead of generating the full guide sequentially, the system generates a topic skeleton first, then generates all sections in parallel using a ThreadPoolExecutor, reducing perceived latency from 91 seconds to under 20 seconds. AI generation is powered by Google's Gemini 2.5 Flash via the Gemini API. API keys are stored in browser localStorage only and never sent to the server.</p>
+  <div class="stack-tags">
+    <span class="stack-tag">Python</span>
+    <span class="stack-tag">Streamlit</span>
+    <span class="stack-tag">PostgreSQL</span>
+    <span class="stack-tag">Azure App Service</span>
+    <span class="stack-tag">LangChain</span>
+    <span class="stack-tag">Vector Embeddings</span>
+    <span class="stack-tag">Gemini API</span>
+    <span class="stack-tag">PostHog</span>
+    <span class="stack-tag">CI/CD (GitHub Actions)</span>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Features</h2>
+  <p>Each feature below is summarized. Click the link to read the full PRD.</p>
+
+  <div class="feature-block">
+    <div class="feature-title">1 — Generate Study Guide from Weak Areas</div>
+    <p>After a student takes a quiz, the app identifies topics where they answered incorrectly and tags them as weak areas. Instead of sending students back to the full study guide to hunt for those topics, the app generates a new study guide scoped only to those weak areas. This closes the loop between testing and targeted review — a flow Quizlet does not currently offer.</p>
+    <a href="#" class="prd-link">View full PRD →</a>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">2 — Generate Quiz from Weak Areas</div>
+    <p>Retaking the full quiz after getting things wrong means spending time on topics the student already knows. This feature generates a new quiz scoped only to weak-area topics, giving students concentrated practice on what they actually need to improve. If the entire quiz was answered incorrectly, the student is redirected to retake the full quiz with different questions rather than an empty weak-area quiz.</p>
+    <a href="#" class="prd-link">View full PRD →</a>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">3 — Deep Dive and Cram Mode</div>
+    <p>A single study guide cannot serve students with different time constraints equally well. Deep Dive mode generates a comprehensive guide covering all indexed material in depth. Cram mode generates a focused guide based on bolded text, headings, and high-frequency concepts — prioritizing what's most likely to appear on an exam. If the material has no bolded text, the AI identifies important topics based on content frequency and fundamentals.</p>
+    <a href="#" class="prd-link">View full PRD →</a>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">4 — Challenge Attempt Before Reveal</div>
+    <p>Study guides include challenge problems at the end of each topic section. Previously the solution was immediately visible, allowing students to read the answer without attempting the problem — creating the illusion of understanding without actual recall. This feature requires students to submit at least one attempt before the solution is revealed. After submitting, the student's attempt and the full solution appear side by side, with an AI-generated evaluation identifying what they got right, what they missed, and which concept the gap points to.</p>
+    <a href="#" class="prd-link">View full PRD →</a>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">5 — Configurable Quiz Question Count</div>
+    <p>The quiz previously generated a fixed 5 questions regardless of how much material was uploaded. For students with large workspaces covering multiple PDFs and lecture decks, 5 questions provides superficial coverage. Students can now select 5, 10, 15, or 20 questions before generating. The recommended default is calculated from the number of indexed sections — approximately 2 questions per section, capped at 20. Cram mode defaults to 5; Deep Dive defaults to the material-based recommendation.</p>
+    <a href="#" class="prd-link">View full PRD →</a>
+  </div>
+</section>
+
+<!-- ── USER RESEARCH ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">User Research</h2>
+  <p>Six external beta users tested the app after public flyers were posted at ASU's Memorial Union and Discord channels were used to recruit CS students. A structured feedback form collected responses on usability, confusion points, and feature requests.</p>
+  <p>Two key findings emerged. First, users could not see which files had been uploaded after selecting them — the upload zone showed no confirmation until after clicking Index Materials, causing users to re-upload files they had already added. This is being addressed by adding filename confirmation immediately after file selection. Second, multiple users encountered API key errors with unclear messaging. The generic "check your API key and try again" error appeared for four distinct failure types — invalid key, network block, 503 from Gemini, and rate limit — making it impossible for users to self-diagnose. Updating error messages to be failure-specific is a priority for the next sprint.</p>
+  <p>One user explicitly requested a way to generate their Gemini API key from within the app. This informed the decision to add a direct link to aistudio.google.com next to the API key input in Settings, which has been added.</p>
+</section>
+
+<!-- ── PRODUCT METRICS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Product Metrics</h2>
+  <p>Data collected via a custom telemetry pipeline and PostHog. Sample: 6 external users, data range July 15–16, 2026. <em>Note: small sample size — directional only.</em></p>
+
+  <div class="callout">
+    <strong>Note on total users:</strong> ~10 people have used AI Study Buddy to date — roughly 5 before telemetry was implemented, plus the users tracked in the dashboard below. The tables in this section reflect only the users captured after PostHog was added, not the full user count. [Reconcile exact figures before publishing.]
+  </div>
+
+  <p>The metrics framework tracks six KPIs across feature adoption, session behavior, funnel completion, retention, and API health.</p>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>Metric 1 — Feature Adoption Rate</strong></div>
+    <table>
+      <thead>
+        <tr><th>Feature</th><th>Sessions Used</th><th>Total Sessions</th><th>Adoption %</th><th>Target</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Material Upload</td><td>3</td><td>3</td><td>100%</td><td>≥ 25%</td><td><span class="status-dot status-pass"></span></td></tr>
+        <tr><td>Study Guide Generated</td><td>1</td><td>3</td><td>33.3%</td><td>≥ 85%</td><td><span class="status-dot status-fail"></span></td></tr>
+        <tr><td>Quiz Attempted</td><td>1</td><td>3</td><td>33.3%</td><td>≥ 85%</td><td><span class="status-dot status-fail"></span></td></tr>
+        <tr><td>Settings / API Config</td><td>0</td><td>3</td><td>0%</td><td>≥ 50%</td><td><span class="status-dot status-fail"></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>Metric 2 — Session Duration</strong></div>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Value</th><th>Median</th><th>Target</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Avg Session Duration</td><td>10.5 min</td><td>3.5 min</td><td>&gt; 25 min</td><td><span class="status-dot status-fail"></span></td></tr>
+        <tr><td>Sessions &lt; 15 min (friction)</td><td>2 of 3 sessions</td><td>—</td><td>&lt; 20% of sessions</td><td><span class="status-dot status-fail"></span></td></tr>
+      </tbody>
+    </table>
+    <p class="metric-note">Hypothesis: users hit the API key setup barrier and did not complete onboarding.</p>
+  </div>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>Metric 4 — Task Completion Funnels</strong></div>
+    <table>
+      <thead>
+        <tr><th>Funnel</th><th>Started</th><th>Completed</th><th>Rate</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Study Flow</td><td>3</td><td>1</td><td>33.3%</td><td><span class="status-dot status-fail"></span></td></tr>
+        <tr><td>Evaluation Flow</td><td>3</td><td>1</td><td>33.3%</td><td><span class="status-dot status-fail"></span></td></tr>
+        <tr><td>Onboarding Flow</td><td>3</td><td>0</td><td>0%</td><td><span class="status-dot status-fail"></span></td></tr>
+      </tbody>
+    </table>
+    <p class="metric-note">The 0% onboarding completion rate is the most significant signal — no user successfully saved a valid API key, which blocks all AI generation. This explains the low study guide and quiz adoption numbers.</p>
+  </div>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>Metric 5 — Retention (Returning vs. New)</strong></div>
+    <table>
+      <thead>
+        <tr><th>Period</th><th>Active Users</th><th>Returning</th><th>New</th><th>Retention %</th><th>Target</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Last 7 days</td><td>3</td><td>0</td><td>3</td><td>0%</td><td>80% returning</td><td><span class="status-dot status-fail"></span></td></tr>
+      </tbody>
+    </table>
+    <p class="metric-note">Expected at this stage — the product has been live for less than two weeks with a small initial user base.</p>
+  </div>
+
+  <div class="metric-block">
+    <div class="metric-label"><strong>Metric 6 — API Health</strong></div>
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Count</th><th>Failures</th><th>Failure Rate</th><th>Target</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Generation Requests</td><td>2</td><td>1</td><td>33.3%</td><td>&lt; 30% failure</td><td><span class="status-dot status-fail"></span></td></tr>
+      </tbody>
+    </table>
+    <p class="metric-note">Failure logged as a 503 UNAVAILABLE from Gemini during high demand.</p>
+  </div>
+
+  <p><strong>What the data tells me:</strong> The core blocker is onboarding. Every downstream metric — study guide generation, quiz attempts, session duration — is suppressed by the fact that users cannot successfully set up their API key. The immediate priority is reducing API key setup friction, not adding new features.</p>
+</section>
+
+<!-- ── COMPETITIVE ANALYSIS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Competitive Analysis</h2>
+  <p>AI Study Buddy and Quizlet AI solve adjacent problems but at different points in the student workflow. Quizlet assumes students already have organized content. AI Study Buddy works upstream — it takes raw, unstructured course material and builds the structure. Quizlet's post-quiz experience offers retake or new quiz. AI Study Buddy's closed-loop remediation — identify weak areas, generate targeted content, retest — is more structured and more adaptive.</p>
+  <p>Quizlet's meaningful advantages over AI Study Buddy currently: inline study guide interactions (highlight to ask, reword, explain), audio upload for lecture recordings, and a folder-based organization system for saved guides.</p>
+  <a href="#" class="prd-link">View full Quizlet AI teardown →</a>
+</section>
+
+<!-- ── LEARNINGS ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">What I Learned and What's Next</h2>
+  <p>The most important thing I learned is that onboarding friction kills everything downstream. A user who can't get past the API key setup never generates a guide, never takes a quiz, never experiences the core value. If I were to prioritize one thing before expanding features, it would be removing the API key requirement entirely by absorbing the cost on the backend and offering a freemium model with usage limits.</p>
+  <p>The second thing I learned from user research is that UI feedback at each step matters more than I expected. Users assumed their upload failed because they couldn't see the filename. They assumed the app was broken because the error message didn't tell them what actually went wrong. Small copy and feedback changes had more impact on user confidence than technical features.</p>
+  <p><strong>What I'd build next, in priority order:</strong> email-based authentication to remove the password-reset gap, a progress dashboard showing quiz scores over time so students can see improvement, the challenge attempt feature (in progress), and audio upload support to close the gap with Quizlet.</p>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-name">Sharini Kandregula · skandre4@asu.edu</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Sharini55" target="_blank">GitHub</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>
