@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Focus Flow — Productivity Workspace | Sharini Kandregula</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #fffaf0;
+      --ink:    #0d3471;
+      --border: rgba(13, 52, 113, 0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 250, 240, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nav-links a {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.18s;
+    }
+
+    .nav-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── LAYOUT ── */
+    .page-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 60px;
+    }
+
+    #hero {
+      padding-top: 140px;
+      padding-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1.5px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 28px;
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .btn:hover { background: var(--ink); color: var(--bg); }
+
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+
+    /* ── SECTIONS ── */
+    .section-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .section-body p { margin-bottom: 16px; max-width: 760px; }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stack-tag {
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      color: var(--ink);
+      opacity: 0.85;
+    }
+
+    /* ── FEATURES & IMAGES ── */
+    .feature-block {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+
+    .feature-block:last-child { border-bottom: 1px solid var(--border); }
+
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .feature-img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 18px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: rgba(13, 52, 113, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0 28px;
+      font-size: 0.95rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-name { font-size: 0.95rem; opacity: 0.6; }
+
+    .footer-links { display: flex; gap: 32px; }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .footer-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 20px; flex-wrap: wrap; }
+      .page-section { padding: 60px 20px; }
+      #hero { padding-top: 120px; }
+      footer { flex-direction: column; padding: 28px 20px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" class="page-section">
+  <h1 class="hero-title">Focus Flow Productivity Suite</h1>
+  <div class="btn-row">
+    <a href="https://github.com/Sharini55/To-do-List-" target="_blank" class="btn">See code</a>
+    <a href="https://todoapp-a7a8f7f3djb7h8b8.eastus-01.azurewebsites.net/" target="_blank" class="btn btn-primary">See it live</a>
+  </div>
+</section>
+
+<!-- ── PROBLEM STATEMENT ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Problem Statement</h2>
+  <p>For students and chronic procrastinators struggling with ADHD-like task paralysis, traditional productivity tools fail because they increase cognitive overhead. When trying to work, two primary friction points destroy focus:</p>
+  <p>1. <strong>Intimidating Tasks & Context Switching:</strong> Broad goals (e.g., "Write Essay") feel overwhelming without clear micro-steps. Furthermore, while attempting to work, random thoughts pop up ("Buy groceries", "Check email"), causing users to switch context, open 100 browser tabs, and lose track of their core objective.</p>
+  <p>2. <strong>Tool Fragmentation:</strong> Existing tools isolate tasks, habit tracking, scheduling, and timers across four different apps, requiring users to constantly jump between interfaces just to structure their day.</p>
+</section>
+
+<!-- ── DESIGN ORIGIN & USER RESEARCH ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">User Research & Design Origin</h2>
+  <div class="callout">
+    <strong>Faculty Feedback Loop:</strong> The architecture of this workspace was informed directly through 3 iterative design feedback sessions with an ASU computer science professor. 
+  </div>
+  <p>The primary insight gained from professor interviews was that existing student productivity platforms fail because they treat tasks, calendar events, habits, and focus sessions as isolated silos. A student cannot effectively plan a day without seeing their daily schedule side-by-side with their habit goals and active priorities.</p>
+  <p>This led to the creation of a unified daily planner engine that aggregates reminders, habit streaks, calendar timelines, and task execution in a single viewport.</p>
+</section>
+
+<!-- ── CORE FEATURES & SYSTEM ARCHITECTURE ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Key Features & UX Architecture</h2>
+
+  <div class="feature-block">
+    <div class="feature-title">1. Priority Dashboard & Distraction Buffer</div>
+    <p>The home dashboard establishes immediate clarity by displaying only today's priority items. To combat "tab-splurge" and distraction-driven context switching, the <strong>Distraction Buffer</strong> allows users to instantly dump stray thoughts into a quick-capture box without leaving their active task workflow.</p>
+
+    <!-- REPLACE WITH YOUR DASHBOARD SCREENSHOT FILENAME -->
+    <img src="img/dashboard-screenshot.png" alt="Focus Flow Dashboard" class="feature-img" />
+
+    <p>Additionally, large goals automatically trigger the <strong>Task Breakdown Engine</strong>, decomposing overwhelming tasks into manageable sub-steps to reduce execution friction.</p>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">2. Unified Daily Planner & Time-Blocking</div>
+    <p>Designed based on academic feedback, the Daily Planner brings Top Priorities, System Reminders, Goal/Habit progress bars, and a Drag-and-Drop Schedule into a single synchronized view.</p>
+
+    <!-- REPLACE WITH YOUR DAILY PLANNER SCREENSHOT FILENAME -->
+    <img src="img/daily-planner-screenshot.png" alt="Focus Flow Daily Planner" class="feature-img" />
+
+    <p>Users can trigger AI day-planning assistance to automatically map out scheduled blocks based on priority tasks and habits.</p>
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">3. Deep Focus Timer Modes</div>
+    <p>To support different deep-work styles, the Focus execution screen provides three distinct timer modalities (Countdown Sprint, Stopwatch, and 25m/5m Pomodoro) paired with a clean, zero-distraction layout centered entirely around the active priority.</p>
+
+    <!-- REPLACE WITH YOUR FOCUS TIMER SCREENSHOT FILENAME -->
+    <img src="img/focus-screenshot.png" alt="Focus Timer Mode" class="feature-img" />
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">4. Integrated Monthly Calendar</div>
+    <p>A high-level calendar interface allowing users to map out long-term assignment deadlines, project targets, and monthly milestones synced directly with daily task scheduling.</p>
+
+    <!-- REPLACE WITH YOUR CALENDAR SCREENSHOT FILENAME -->
+    <img src="img/calendar-screenshot.png" alt="Integrated Calendar" class="feature-img" />
+  </div>
+
+  <div class="feature-block">
+    <div class="feature-title">5. Visual Habit Tracker & Streak Engine</div>
+    <p>Built-in visual streak tracking for recurring daily habits (e.g., Gym, Reading). Progress bars and streak indicators incentivize daily consistency without needing external habit apps.</p>
+
+    <!-- REPLACE WITH YOUR HABITS SCREENSHOT FILENAME -->
+    <img src="img/habits-screenshot.png" alt="Habit Tracker" class="feature-img" />
+  </div>
+</section>
+
+<!-- ── TECH STACK ── -->
+<section class="page-section section-body">
+  <h2 class="section-title">Technical Implementation</h2>
+  <p>Built as a high-performance web application deployed directly on Azure Cloud infrastructure using GitHub Actions CI/CD pipelines.</p>
+  <div class="stack-tags">
+    <span class="stack-tag">Python</span>
+    <span class="stack-tag">Streamlit</span>
+    <span class="stack-tag">Azure App Service</span>
+    <span class="stack-tag">RESTful APIs</span>
+    <span class="stack-tag">State Management</span>
+    <span class="stack-tag">CI/CD (GitHub Actions)</span>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-name">Sharini Kandregula · skandre4@asu.edu</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Sharini55" target="_blank">GitHub</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>
