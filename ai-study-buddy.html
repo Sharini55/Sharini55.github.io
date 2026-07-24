@@ -299,7 +299,7 @@
 <section class="page-section section-body">
   <h2 class="section-title">Technical Architecture</h2>
   <p>AI Study Buddy is built with Python and Streamlit and deployed on Azure App Service, using a PostgreSQL database on Azure. Source files are parsed, chunked using LangChain, converted to vector embeddings, and stored for semantic retrieval.</p>
-  <p>Study guide generation uses a Skeleton-of-Thought parallel processing framework — instead of generating the full guide sequentially, the system generates a topic skeleton first, then generates all sections in parallel using a ThreadPoolExecutor, reducing perceived latency from 91 seconds to under 20 seconds. AI generation is powered by Google's Gemini 2.5 Flash via the Gemini API. API keys are stored in browser localStorage only and never sent to the server.</p>
+  <p>Study guide generation uses a Skeleton-of-Thought parallel processing framework. Instead of generating the full guide sequentially, the system generates a topic skeleton first, then generates all sections in parallel using a ThreadPoolExecutor, reducing perceived latency from 91 seconds to under 20 seconds. AI generation is powered by Google's Gemini 2.5 Flash via the Gemini API. API keys are stored in browser localStorage only and never sent to the server.</p>
   <div class="stack-tags">
     <span class="stack-tag">Python</span>
     <span class="stack-tag">Streamlit</span>
@@ -319,57 +319,57 @@
   <p>Each feature below is summarized. Click the link to read the full PRD.</p>
 
   <div class="feature-block">
-    <div class="feature-title">1 — Generate Study Guide from Weak Areas</div>
-    <p>After a student takes a quiz, the app identifies topics where they answered incorrectly and tags them as weak areas. Instead of sending students back to the full study guide to hunt for those topics, the app generates a new study guide scoped only to those weak areas. This closes the loop between testing and targeted review — a flow Quizlet does not currently offer.</p>
-    <a href="#" class="prd-link">View full PRD →</a>
+    <div class="feature-title">Feature 1: Generate Study Guide from Weak Areas</div>
+    <p>After a student takes a quiz, the app identifies topics where they answered incorrectly and tags them as weak areas. Instead of sending students back to the full study guide to hunt for those topics, the app generates a new study guide scoped only to those weak areas. This closes the loop between testing and targeted review, a flow Quizlet does not currently offer.</p>
+    <a href="f1prd" class="prd-link">View full PRD →</a>
   </div>
 
   <div class="feature-block">
-    <div class="feature-title">2 — Generate Quiz from Weak Areas</div>
+    <div class="feature-title">Feature 2: Generate Quiz from Weak Areas</div>
     <p>Retaking the full quiz after getting things wrong means spending time on topics the student already knows. This feature generates a new quiz scoped only to weak-area topics, giving students concentrated practice on what they actually need to improve. If the entire quiz was answered incorrectly, the student is redirected to retake the full quiz with different questions rather than an empty weak-area quiz.</p>
-    <a href="#" class="prd-link">View full PRD →</a>
+    <a href="f2prd" class="prd-link">View full PRD →</a>
   </div>
 
   <div class="feature-block">
-    <div class="feature-title">3 — Deep Dive and Cram Mode</div>
-    <p>A single study guide cannot serve students with different time constraints equally well. Deep Dive mode generates a comprehensive guide covering all indexed material in depth. Cram mode generates a focused guide based on bolded text, headings, and high-frequency concepts — prioritizing what's most likely to appear on an exam. If the material has no bolded text, the AI identifies important topics based on content frequency and fundamentals.</p>
-    <a href="#" class="prd-link">View full PRD →</a>
+    <div class="feature-title">Feature 3: Deep Dive and Cram Mode</div>
+    <p>A single study guide cannot serve students with different time constraints equally well. Deep Dive mode generates a comprehensive guide covering all indexed material in depth. Cram mode generates a focused guide based on bolded text, headings, and high-frequency concepts, prioritizing what's most likely to appear on an exam. If the material has no bolded text, the AI identifies important topics based on content frequency and fundamentals.</p>
+    <a href="f3prd" class="prd-link">View full PRD →</a>
   </div>
 
   <div class="feature-block">
-    <div class="feature-title">4 — Challenge Attempt Before Reveal</div>
-    <p>Study guides include challenge problems at the end of each topic section. Previously the solution was immediately visible, allowing students to read the answer without attempting the problem — creating the illusion of understanding without actual recall. This feature requires students to submit at least one attempt before the solution is revealed. After submitting, the student's attempt and the full solution appear side by side, with an AI-generated evaluation identifying what they got right, what they missed, and which concept the gap points to.</p>
-    <a href="#" class="prd-link">View full PRD →</a>
+    <div class="feature-title">Feature 4: Challenge Attempt Before Reveal</div>
+    <p>Study guides include challenge problems at the end of each topic section. Previously, the solution was immediately visible, allowing students to read the answer without attempting the problem, creating the illusion of understanding without actual recall. This feature requires students to submit at least one attempt before the solution is revealed. After submitting, the student's attempt and the full solution appear side by side, with an AI-generated evaluation identifying what they got right, what they missed, and which concept the gap points to.</p>
+    <a href="f4prd" class="prd-link">View full PRD →</a>
   </div>
 
   <div class="feature-block">
-    <div class="feature-title">5 — Configurable Quiz Question Count</div>
-    <p>The quiz previously generated a fixed 5 questions regardless of how much material was uploaded. For students with large workspaces covering multiple PDFs and lecture decks, 5 questions provides superficial coverage. Students can now select 5, 10, 15, or 20 questions before generating. The recommended default is calculated from the number of indexed sections — approximately 2 questions per section, capped at 20. Cram mode defaults to 5; Deep Dive defaults to the material-based recommendation.</p>
-    <a href="#" class="prd-link">View full PRD →</a>
+    <div class="feature-title">Feature 5: Configurable Quiz Question Count</div>
+    <p>The quiz previously generated a fixed 5 questions regardless of how much material was uploaded. For students with large workspaces covering multiple PDFs and lecture decks, the 5 questions provide superficial coverage. Students can now select 5, 10, 15, or 20 questions before generating. The recommended default is calculated from the number of indexed sections, approximately 2 questions per section, capped at 20. Cram mode defaults to 5; Deep Dive defaults to the material-based recommendation.</p>
+    <a href="f5prd" class="prd-link">View full PRD →</a>
   </div>
 </section>
 
 <!-- ── USER RESEARCH ── -->
 <section class="page-section section-body">
   <h2 class="section-title">User Research</h2>
-  <p>Six external beta users tested the app after public flyers were posted at ASU's Memorial Union and Discord channels were used to recruit CS students. A structured feedback form collected responses on usability, confusion points, and feature requests.</p>
-  <p>Two key findings emerged. First, users could not see which files had been uploaded after selecting them — the upload zone showed no confirmation until after clicking Index Materials, causing users to re-upload files they had already added. This is being addressed by adding filename confirmation immediately after file selection. Second, multiple users encountered API key errors with unclear messaging. The generic "check your API key and try again" error appeared for four distinct failure types — invalid key, network block, 503 from Gemini, and rate limit — making it impossible for users to self-diagnose. Updating error messages to be failure-specific is a priority for the next sprint.</p>
+  <p>Six external beta users tested the app after public flyers were posted at ASU's Memorial Union, and Discord channels were used to recruit CS students. A structured feedback form collected responses regarding usability, points of confusion, and feature requests.</p>
+  <p>Two key findings emerged. First, users could not see which files had been uploaded after selecting them; the upload zone showed no confirmation until after clicking Index Materials, causing users to re-upload files they had already added. This is being addressed by adding filename confirmation immediately after file selection. Second, multiple users encountered API key errors with unclear messaging. The generic "check your API key and try again" error appeared for four distinct failure types: invalid key, network block, 503 from Gemini, and rate limit, making it impossible for users to self-diagnose. Updating error messages to be failure-specific is a priority for the next sprint.</p>
   <p>One user explicitly requested a way to generate their Gemini API key from within the app. This informed the decision to add a direct link to aistudio.google.com next to the API key input in Settings, which has been added.</p>
 </section>
 
 <!-- ── PRODUCT METRICS ── -->
 <section class="page-section section-body">
   <h2 class="section-title">Product Metrics</h2>
-  <p>Data collected via a custom telemetry pipeline and PostHog. Sample: 6 external users, data range July 15–16, 2026. <em>Note: small sample size — directional only.</em></p>
+  <p>Data collected via a custom telemetry pipeline and PostHog. Sample: 6 external users, data range July 15–16, 2026. <em>Note: small sample size, directional only.</em></p>
 
   <div class="callout">
-    <strong>Note on total users:</strong> ~10 people have used AI Study Buddy to date — roughly 5 before telemetry was implemented, plus the users tracked in the dashboard below. The tables in this section reflect only the users captured after PostHog was added, not the full user count. [Reconcile exact figures before publishing.]
+    <strong>Note on total users:</strong> ~10 people have used AI Study Buddy to date, roughly 5 before telemetry was implemented, plus the users tracked in the dashboard below. The tables in this section reflect only the users captured after PostHog was added, not the full user count.
   </div>
 
   <p>The metrics framework tracks six KPIs across feature adoption, session behavior, funnel completion, retention, and API health.</p>
 
   <div class="metric-block">
-    <div class="metric-label"><strong>Metric 1 — Feature Adoption Rate</strong></div>
+    <div class="metric-label"><strong>Metric 1: Feature Adoption Rate</strong></div>
     <table>
       <thead>
         <tr><th>Feature</th><th>Sessions Used</th><th>Total Sessions</th><th>Adoption %</th><th>Target</th><th>Status</th></tr>
@@ -384,7 +384,7 @@
   </div>
 
   <div class="metric-block">
-    <div class="metric-label"><strong>Metric 2 — Session Duration</strong></div>
+    <div class="metric-label"><strong>Metric 2: Session Duration</strong></div>
     <table>
       <thead>
         <tr><th>Metric</th><th>Value</th><th>Median</th><th>Target</th><th>Status</th></tr>
@@ -398,7 +398,7 @@
   </div>
 
   <div class="metric-block">
-    <div class="metric-label"><strong>Metric 4 — Task Completion Funnels</strong></div>
+    <div class="metric-label"><strong>Metric 4: Task Completion Funnels</strong></div>
     <table>
       <thead>
         <tr><th>Funnel</th><th>Started</th><th>Completed</th><th>Rate</th><th>Status</th></tr>
@@ -409,11 +409,11 @@
         <tr><td>Onboarding Flow</td><td>3</td><td>0</td><td>0%</td><td><span class="status-dot status-fail"></span></td></tr>
       </tbody>
     </table>
-    <p class="metric-note">The 0% onboarding completion rate is the most significant signal — no user successfully saved a valid API key, which blocks all AI generation. This explains the low study guide and quiz adoption numbers.</p>
+    <p class="metric-note">The 0% onboarding completion rate is the most significant signal; no user successfully saved a valid API key, which blocks all AI generation. This explains the low study guide and quiz adoption numbers.</p>
   </div>
 
   <div class="metric-block">
-    <div class="metric-label"><strong>Metric 5 — Retention (Returning vs. New)</strong></div>
+    <div class="metric-label"><strong>Metric 5: Retention (Returning vs. New)</strong></div>
     <table>
       <thead>
         <tr><th>Period</th><th>Active Users</th><th>Returning</th><th>New</th><th>Retention %</th><th>Target</th><th>Status</th></tr>
@@ -422,11 +422,11 @@
         <tr><td>Last 7 days</td><td>3</td><td>0</td><td>3</td><td>0%</td><td>80% returning</td><td><span class="status-dot status-fail"></span></td></tr>
       </tbody>
     </table>
-    <p class="metric-note">Expected at this stage — the product has been live for less than two weeks with a small initial user base.</p>
+    <p class="metric-note">Expected at this stage, the product has been live for less than two weeks with a small initial user base.</p>
   </div>
 
   <div class="metric-block">
-    <div class="metric-label"><strong>Metric 6 — API Health</strong></div>
+    <div class="metric-label"><strong>Metric 6: API Health</strong></div>
     <table>
       <thead>
         <tr><th>Metric</th><th>Count</th><th>Failures</th><th>Failure Rate</th><th>Target</th><th>Status</th></tr>
@@ -438,13 +438,13 @@
     <p class="metric-note">Failure logged as a 503 UNAVAILABLE from Gemini during high demand.</p>
   </div>
 
-  <p><strong>What the data tells me:</strong> The core blocker is onboarding. Every downstream metric — study guide generation, quiz attempts, session duration — is suppressed by the fact that users cannot successfully set up their API key. The immediate priority is reducing API key setup friction, not adding new features.</p>
+  <p><strong>What the data tells me:</strong> The core blocker is onboarding. Every downstream metric: study guide generation, quiz attempts, and session duration is suppressed by the fact that users cannot successfully set up their API key. The immediate priority is reducing friction in API key setup, not adding new features.</p>
 </section>
 
 <!-- ── COMPETITIVE ANALYSIS ── -->
 <section class="page-section section-body">
   <h2 class="section-title">Competitive Analysis</h2>
-  <p>AI Study Buddy and Quizlet AI solve adjacent problems but at different points in the student workflow. Quizlet assumes students already have organized content. AI Study Buddy works upstream — it takes raw, unstructured course material and builds the structure. Quizlet's post-quiz experience offers retake or new quiz. AI Study Buddy's closed-loop remediation — identify weak areas, generate targeted content, retest — is more structured and more adaptive.</p>
+  <p>AI Study Buddy and Quizlet AI solve adjacent problems, but at different points in the student workflow. Quizlet assumes students already have organized content. AI Study Buddy works upstream; it takes raw, unstructured course material and builds the structure. Quizlet's post-quiz experience offers a retake or a new quiz. AI Study Buddy's closed-loop remediation, which identifies weak areas, generates targeted content, and retests, is more structured and more adaptive.</p>
   <p>Quizlet's meaningful advantages over AI Study Buddy currently: inline study guide interactions (highlight to ask, reword, explain), audio upload for lecture recordings, and a folder-based organization system for saved guides.</p>
   <a href="#" class="prd-link">View full Quizlet AI teardown →</a>
 </section>
