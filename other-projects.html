@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Other Projects — Sharini Kandregula</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #fffaf0;
+      --ink:    #0d3471;
+      --border: rgba(13, 52, 113, 0.18);
+      --muted:  rgba(13, 52, 113, 0.45);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255, 250, 240, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nav-links a {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.18s;
+    }
+
+    .nav-links a:hover { border-bottom-color: var(--ink); }
+
+    /* ── PAGE ── */
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 140px 60px 100px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      margin-bottom: 40px;
+    }
+
+    .back-link:hover {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+
+    .page-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      letter-spacing: -0.3px;
+      margin-bottom: 12px;
+    }
+
+    .page-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 64px;
+    }
+
+    /* ── PROJECT ENTRIES ── */
+    .project-entry {
+      margin-bottom: 72px;
+      padding-bottom: 72px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-entry:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .entry-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .entry-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+      line-height: 1.25;
+    }
+
+    .entry-date {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 6px;
+    }
+
+    .code-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .code-btn:hover {
+      border-color: var(--ink);
+      background: rgba(13, 52, 113, 0.04);
+    }
+
+    .code-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .entry-desc {
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      max-width: 700px;
+    }
+
+    .entry-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+      max-width: 700px;
+    }
+
+    .entry-bullets li {
+      font-size: 0.95rem;
+      color: var(--ink);
+      line-height: 1.65;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .entry-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .entry-img {
+      width: 100%;
+      max-width: 680px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: block;
+      margin-top: 8px;
+    }
+
+    .no-img-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-name {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      font-size: 0.9rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .footer-links a:hover { border-bottom-color: var(--ink); }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .page { padding: 110px 20px 80px; }
+      footer { flex-direction: column; gap: 20px; padding: 28px 20px; }
+      .footer-links { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a></li>
+    <li><a href="resume.pdf" target="_blank">Resume</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <h1 class="page-title">Other Projects</h1>
+  <p class="page-sub">Hackathon builds, class projects, and personal experiments.</p>
+
+  <!-- ── FINE MOTOR SKILLS ── -->
+  <div class="project-entry">
+    <div class="entry-header">
+      <div class="entry-title">Fine Motor Skills App (FSE 100 class project)</div>
+      <div class="entry-date">Aug 2025 – Dec 2025</div>
+    </div>
+
+    <a href="https://github.com/Sharini55/App-for-children.git" target="_blank" class="code-btn">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+                 .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+                 -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                 .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+                 .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+                 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      See code
+    </a>
+
+    <p class="entry-desc">
+      A pediatric fine motor skills app built for FSE 100 with coloring, puzzle,
+      shape sorting, and drawing activities.
+    </p>
+
+    <ul class="entry-bullets">
+      <li>Managed the project's technical development end to end, setting deadlines and tracking progress across the team.</li>
+      <li>Translated professor requirements into functional software specs, ensuring the MVP exceeded all technical constraints.</li>
+      <li>Designed a gamified points system to motivate young users through activity completion.</li>
+    </ul>
+
+    <img
+      class="entry-img"
+      src="img/fine-motor-skills.png"
+      alt="Fine Motor Skills App — activity selection screen"
+    />
+  </div>
+
+  <!-- ── HABIT TRACKER ── -->
+  <div class="project-entry">
+    <div class="entry-header">
+      <div class="entry-title">Habit Tracker — SunHacks 2025</div>
+      <div class="entry-date">Sep 2025</div>
+    </div>
+
+    <a href="https://github.com/Sharini55/Habit-tracker.git" target="_blank" class="code-btn">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+                 .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+                 -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                 .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+                 .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+                 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      See code
+    </a>
+
+    <p class="entry-desc">
+      A gamified habit tracker web app built and shipped in 48 hours at SunHacks.
+      Designed to help users build daily routines through streaks, points, and
+      progress tracking.
+    </p>
+
+    <ul class="entry-bullets">
+      <li>Rapidly prototyped a functional MVP under a strict 48-hour deadline, adopting new front-end frameworks mid-hackathon.</li>
+      <li>Led collaborative front-end development in HTML, CSS, and React; established a Git workflow to enable conflict-free parallel contributions.</li>
+    </ul>
+
+    <img
+      class="entry-img"
+      src="img/hack.png"
+      alt= "Dashboard"
+    />
+  </div>
+
+  <!-- ── LEGO CLASSIFIER ── -->
+  <div class="project-entry">
+    <div class="entry-header">
+      <div class="entry-title">LEGO Image Classifier</div>
+      <div class="entry-date">Dec 2025 – Jan 2026</div>
+    </div>
+
+    <a href="https://colab.research.google.com/drive/19gjVXUKqaKCjbgiivYALtRtAaErJljxS?usp=sharing" target="_blank" class="code-btn">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+                 .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+                 -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                 .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+                 .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+                 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      See code
+    </a>
+
+    <p class="entry-desc">
+      A convolutional neural network trained to classify LEGO car images using
+      transfer learning on MobileNetV2, achieving over 90% accuracy across
+      450 preprocessed images.
+    </p>
+
+    <ul class="entry-bullets">
+      <li>Applied normalization, center-crop augmentation, and background reduction to improve model generalization.</li>
+      <li>Used linear algebra and probability concepts to optimize loss functions and evaluate model confidence.</li>
+    </ul>
+
+    <p class="no-img-note">No screenshot available.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">Sharini Kandregula · skandre4@asu.edu</div>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/sharini-kandregula" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Sharini55" target="_blank">GitHub</a>
+    <a href="resume.pdf" target="_blank">Resume</a>
+  </div>
+</footer>
+
+</body>
+</html>
